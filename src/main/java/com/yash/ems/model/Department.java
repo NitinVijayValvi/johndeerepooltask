@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,12 +38,12 @@ public class Department implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Department(Long id, String departmentName, String description, Set<Employee> employees) {
+	public Department(Long id, String departmentName, String description, Employee employee) {
 		super();
 		this.id = id;
 		this.departmentName = departmentName;
 		this.description = description;
-		this.employees = employees;
+		this.employee = employee;
 	}
 
 	public String getDescription() {
@@ -58,31 +59,27 @@ public class Department implements Serializable{
 	}
 
 	@JsonIgnore
-	@OneToMany(
+	@ManyToOne(
 	fetch = FetchType.EAGER,
-	cascade = CascadeType.ALL,
-	orphanRemoval = true)
-	@JoinColumn(name="departmentid",referencedColumnName = "id")
-	private Set<Employee> employees = new HashSet<>();
-	public Set<Employee> getEmployees() {
-		return employees;
-	}
-
-	public void setEmployees(Set<Employee> employees) {
-		this.employees = employees;
-	}
-	
-	public void addEmployee(Employee employee) {
-		this.employees.add(employee);
-		employee.equals(employee);
-	}
+	cascade = CascadeType.DETACH)
+	@JoinColumn(name="departmentid")
+	private Employee employee;
 
 
+
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 
 	@Override
 	public String toString() {
 		return "Department [id=" + id + ", departmentName=" + departmentName + ", description=" + description
-				+ ", employees=" + employees + "]";
+				+ ", employee=" + employee + "]";
 	}
 
 	public Long getId() {

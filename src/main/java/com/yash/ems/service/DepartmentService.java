@@ -12,5 +12,5 @@ public interface DepartmentService {
 
 	Department findDepartmentById(Long id);
 
-	Department saveDepartmentandEmployees(Department department);
+	Department saveDepartmentandEmployee(Department department);
 }

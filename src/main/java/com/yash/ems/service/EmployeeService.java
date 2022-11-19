@@ -11,7 +11,7 @@ public interface EmployeeService {
 
 	//List<Employee> getEmployeesByName(String employeeName);
 
-	Employee saveEmployeewithDepartment(Employee employee);
+	Employee saveEmployee(Employee employee);
 
 	Employee findEmployeeById(Long employeeId);
 

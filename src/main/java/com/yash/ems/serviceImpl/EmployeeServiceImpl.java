@@ -32,7 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 //	}
 
 	@Override
-	public Employee saveEmployeewithDepartment(Employee employee) {
+	public Employee saveEmployee(Employee employee) {
 		// TODO Auto-generated method stub
 		return employeeRepository.save(employee);
 	}
