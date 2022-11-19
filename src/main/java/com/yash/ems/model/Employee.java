@@ -3,6 +3,7 @@ package com.yash.ems.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -40,8 +42,7 @@ public class Employee implements Serializable{
 	private String lastName;
 	
 	public Employee(Long id, String firstName, String lastName, String username, String password, String emailId,
-			Date dateOfBirth, Long salary, String address, String city, String state, String pincode, String role,
-			Department department) {
+			Date dateOfBirth, Long salary, String address, String city, String state, String pincode, String role) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -56,7 +57,7 @@ public class Employee implements Serializable{
 		this.state = state;
 		this.pincode = pincode;
 		this.role = role;
-		this.department = department;
+		//this.department = department;
 	}
 
 	public Employee() {
@@ -100,18 +101,23 @@ public class Employee implements Serializable{
 	
 	private String role;
 	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "fk_department")
-	private Department department;
+	/*
+	 * @JsonIgnore
+	 * 
+	 * @JsonBackReference
+	 * 
+	 * @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	 * 
+	 * @JoinColumn(name = "departmentid",referencedColumnName = "id",updatable =
+	 * false,insertable = false) private Department department;
+	 */
 
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
+	/*
+	 * public Department getDepartment() { return department; }
+	 * 
+	 * public void setDepartment(Department department) { this.department =
+	 * department; }
+	 */
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

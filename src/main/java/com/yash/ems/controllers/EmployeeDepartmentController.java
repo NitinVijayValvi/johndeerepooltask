@@ -20,6 +20,10 @@ import com.yash.ems.model.Employee;
 import com.yash.ems.service.DepartmentService;
 import com.yash.ems.service.EmployeeService;
 
+/*
+ * Employee and Department Controller with POST ,PUT, GET functionality */
+
+
 @RestController
 @RequestMapping("/emstask/api")
 public class EmployeeDepartmentController {
@@ -76,7 +80,7 @@ public class EmployeeDepartmentController {
 	public ResponseEntity<Department> getDepartment(@PathVariable("id") Long id){
 		
 		Department department = departmentService.findDepartmentById(id);
-		
+		logger.info("department with Id :"+id+"is" +department.toString());
 		return new ResponseEntity<Department>(department,HttpStatus.OK);
 	}
 	
@@ -87,6 +91,13 @@ public class EmployeeDepartmentController {
 	
 		logger.info("departments" +departments.toString());
 		return new ResponseEntity<>(departments,HttpStatus.OK);
+	}
+	
+	@PostMapping("/adddepartment")
+	public ResponseEntity<Department> addDepartmentwithEmployees(@RequestBody Department department){
+		Department newdepartment = departmentService.saveDepartmentandEmployees(department);
+		
+		return new ResponseEntity<>(newdepartment,HttpStatus.CREATED);
 	}
 }
 

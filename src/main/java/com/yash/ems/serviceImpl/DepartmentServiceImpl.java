@@ -29,4 +29,10 @@ public class DepartmentServiceImpl implements DepartmentService{
 		return departmentRepository.findById(id).get();
 	}
 
+	@Override
+	public Department saveDepartmentandEmployees(Department department) {
+		// TODO Auto-generated method stub
+		return departmentRepository.save(department);
+	}
+
 }

@@ -1,13 +1,16 @@
 package com.yash.ems.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -55,8 +58,12 @@ public class Department implements Serializable{
 	}
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "department",fetch = FetchType.EAGER)
-	private Set<Employee> employees;
+	@OneToMany(
+	fetch = FetchType.EAGER,
+	cascade = CascadeType.ALL,
+	orphanRemoval = true)
+	@JoinColumn(name="departmentid",referencedColumnName = "id")
+	private Set<Employee> employees = new HashSet<>();
 	public Set<Employee> getEmployees() {
 		return employees;
 	}
