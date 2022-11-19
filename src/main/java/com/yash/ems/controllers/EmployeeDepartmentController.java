@@ -60,7 +60,6 @@ public class EmployeeDepartmentController {
 	public ResponseEntity<Employee> findEmployeeById(@PathVariable Long id) {
 
 		Employee employee = employeeService.findEmployeeById(id);
-
 		return new ResponseEntity<Employee>(employee, HttpStatus.OK);
 	}
 
@@ -92,8 +91,8 @@ public class EmployeeDepartmentController {
 	}
 
 	@PostMapping("/savedepartment")
-	public ResponseEntity<Department> addDepartmentwithEmployees(@RequestBody Department department) {
-		Department newdepartment = departmentService.saveDepartmentandEmployee(department);
+	public ResponseEntity<Department> addDepartment(@RequestBody Department department) {
+		Department newdepartment = departmentService.saveDepartment(department);
 
 		return new ResponseEntity<>(newdepartment, HttpStatus.CREATED);
 	}
@@ -120,6 +119,7 @@ public class EmployeeDepartmentController {
 			empfound.setUsername(employee.getUsername());
 			empfound.setState(employee.getState());
 			empfound.setRole(employee.getRole());
+			empfound.setDepartment(empfound.getDepartment());
 			return new ResponseEntity<Employee>(employeeService.saveEmployee(employee), HttpStatus.CREATED);
 		} catch (DataAccessException e) {
 			// TODO: handle exception
@@ -139,9 +139,9 @@ public class EmployeeDepartmentController {
 			deptfound.setId(department.getId());
 			deptfound.setDepartmentName(department.getDepartmentName());
 			deptfound.setDescription(department.getDescription());
-			deptfound.setEmployee(department.getEmployee());
+			//deptfound.setEmployees(department.getEmployees());
 
-			return new ResponseEntity<Department>(departmentService.saveDepartmentandEmployee(department),
+			return new ResponseEntity<Department>(departmentService.saveDepartment(department),
 					HttpStatus.CREATED);
 		} catch (DataAccessException e) {
 			// TODO: handle exception

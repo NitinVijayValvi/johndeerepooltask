@@ -27,7 +27,7 @@ public class Department implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private Long id;
 	
 	private String departmentName;
@@ -38,12 +38,12 @@ public class Department implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Department(Long id, String departmentName, String description, Employee employee) {
+	public Department(Long id, String departmentName, String description, Set<Employee> employees) {
 		super();
 		this.id = id;
 		this.departmentName = departmentName;
 		this.description = description;
-		this.employee = employee;
+		this.employees = employees;
 	}
 
 	public String getDescription() {
@@ -59,27 +59,25 @@ public class Department implements Serializable{
 	}
 
 	@JsonIgnore
-	@ManyToOne(
+	@OneToMany(mappedBy = "department",
 	fetch = FetchType.EAGER,
 	cascade = CascadeType.DETACH)
-	@JoinColumn(name="departmentid")
-	private Employee employee;
+	private Set<Employee> employees;
 
 
 
-
-	public Employee getEmployee() {
-		return employee;
+	public Set<Employee> getEmployees() {
+		return employees;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setEmployees(Set<Employee> employees) {
+		this.employees = employees;
 	}
 
 	@Override
 	public String toString() {
 		return "Department [id=" + id + ", departmentName=" + departmentName + ", description=" + description
-				+ ", employee=" + employee + "]";
+				+ ", employees=" + employees + "]";
 	}
 
 	public Long getId() {

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +13,12 @@ import com.yash.ems.exception.EmployeeNotFoundException;
 import com.yash.ems.model.Employee;
 import com.yash.ems.repository.EmployeeRepository;
 import com.yash.ems.service.EmployeeService;
+
 @Service
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
 
+	Logger logger = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 	
 	@Autowired
 	private EmployeeRepository employeeRepository;
@@ -40,7 +44,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Employee findEmployeeById(Long employeeId) {
 		// TODO Auto-generated method stub
-		return employeeRepository.findById(employeeId).orElse(null);
+	
+		return employeeRepository.findById(employeeId)
+				.orElseThrow(()->new EmployeeNotFoundException("Employee With Id" +employeeId+ "Not FOUND"));
+	
 	}
 
 //	@Override

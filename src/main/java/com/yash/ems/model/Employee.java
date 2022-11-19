@@ -26,7 +26,7 @@ public class Employee implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private Long id;
 	
 	public Long getId() {
@@ -41,8 +41,11 @@ public class Employee implements Serializable{
 	
 	private String lastName;
 	
+
+
 	public Employee(Long id, String firstName, String lastName, String username, String password, String emailId,
-			Date dateOfBirth, Long salary, String address, String city, String state, String pincode, String role) {
+			Date dateOfBirth, Long salary, String address, String city, String state, String pincode, String role,
+			Department department) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -57,7 +60,7 @@ public class Employee implements Serializable{
 		this.state = state;
 		this.pincode = pincode;
 		this.role = role;
-		//this.department = department;
+		this.department = department;
 	}
 
 	public Employee() {
@@ -118,6 +121,16 @@ public class Employee implements Serializable{
 	 * public void setDepartment(Department department) { this.department =
 	 * department; }
 	 */
+
+	@ManyToOne
+	private Department department;
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

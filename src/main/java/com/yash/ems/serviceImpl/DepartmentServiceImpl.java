@@ -30,7 +30,7 @@ public class DepartmentServiceImpl implements DepartmentService{
 	}
 
 	@Override
-	public Department saveDepartmentandEmployee(Department department) {
+	public Department saveDepartment(Department department) {
 		// TODO Auto-generated method stub
 		return departmentRepository.save(department);
 	}
