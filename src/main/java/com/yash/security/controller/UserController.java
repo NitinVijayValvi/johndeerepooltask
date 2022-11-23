@@ -25,8 +25,6 @@ import com.yash.security.repository.UserRepository;
 @RequestMapping("/api/user")
 public class UserController {
 
-
-
 	@Autowired
 	private UserRepository userRepository;
 
@@ -48,7 +46,7 @@ public class UserController {
 
 	@GetMapping("/access/{userId}/{userRole}")
 	@Secured("ROLE_ADMIN")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_MODERATOR')")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_MANAGER')")
 	public String giveAccessToUser(@PathVariable int userId, @PathVariable String userRole, Principal principal) {
 
 		User user = userRepository.findById(userId).get();
@@ -77,8 +75,8 @@ public class UserController {
 		if (assignRole.contains("ROLE_ADMIN")) {
 			return Arrays.stream(UserConstant.ADMIN_ACCESS).collect(Collectors.toList());
 		}
-		if (assignRole.contains("ROLE_MODERATOR")) {
-			return Arrays.stream(UserConstant.MODERATOR_ACCESS).collect(Collectors.toList());
+		if (assignRole.contains("ROLE_MANAGER")) {
+			return Arrays.stream(UserConstant.MANAGER_ACCESS).collect(Collectors.toList());
 		}
 
 		return Collections.emptyList();
@@ -91,14 +89,14 @@ public class UserController {
 	@GetMapping
 	@Secured("ROLE_ADMIN")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public List<User> loadUsers(){
+	public List<User> loadUsers() {
 		return userRepository.findAll();
 	}
-	
+
 	@GetMapping("/test")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public String testUserAccess() {
-		
+
 		return "user can access this";
 	}
 }
